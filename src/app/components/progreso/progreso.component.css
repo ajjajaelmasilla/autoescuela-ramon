@@ -1,0 +1,49 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Nunito', sans-serif;
+  background-color: #DFDFDF;
+}
+
+.results-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.progreso-card {
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.progreso-card mat-card-header {
+  text-align: center;
+}
+
+.progreso-card mat-card-title {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.progreso-card mat-card-content {
+  text-align: center;
+}
+
+.charts-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.chart-item {
+  width: 45%;
+  min-width: 300px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

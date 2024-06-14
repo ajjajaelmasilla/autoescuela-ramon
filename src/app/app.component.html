@@ -1,0 +1,25 @@
+<mat-toolbar color="primary">
+  <img src="assets/images/icon.png" class="icon">
+  <span style="margin-right: 3vw; margin-left: 1.5vw;">Autoescuela Ramón</span>
+  <div class="toolbar-column toolbar-nav" *ngIf="isLoggedIn()">
+    <button mat-raised-button routerLink="/tests" routerLinkActive="active">Exámenes</button>
+    <button mat-raised-button routerLink="/historial" routerLinkActive="active">Historial</button>
+    <button mat-raised-button routerLink="/temas" routerLinkActive="active">Temas</button>
+    <button mat-raised-button routerLink="/progreso" routerLinkActive="active">Mi progreso</button>
+  </div>
+  <div class="toolbar-column toolbar-nav" *ngIf="!isLoggedIn()">
+    <button mat-raised-button routerLink="/login" routerLinkActive="active">Login</button>
+    <button mat-raised-button routerLink="/registro" routerLinkActive="active">Registro</button>
+  </div>
+  <div class="toolbar-column toolbar-logout" *ngIf="isLoggedIn()" style="margin-right: 5vw;">
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <img src="assets/images/usuario-ae.png" class="profile-pic">
+      <span style="margin-right: 30px;">{{ getNIF() }}</span>
+      <button color="warn" mat-raised-button (click)="logout()">Cerrar Sesión</button>
+    </div>
+  </div>
+</mat-toolbar>
+
+<div class="content">
+  <router-outlet></router-outlet>
+</div>

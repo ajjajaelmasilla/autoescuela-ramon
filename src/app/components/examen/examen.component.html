@@ -1,0 +1,70 @@
+<div *ngIf="testDetalle" style="background-color: white; padding: 8vh; border-radius: 20px;">
+  <h2>{{ testDetalle.titulo }}</h2>
+  <p>{{ testDetalle.descripcion }}</p>
+
+  <div *ngIf="testDetalle.preguntas?.length" class="pregunta-container">
+    <div class="pregunta" *ngIf="currentPreguntaIndex < testDetalle.preguntas.length">
+      <h3>Pregunta {{ currentPreguntaIndex + 1 }} de {{ testDetalle.preguntas.length }}</h3>
+
+      <div class="pregunta-content">
+        <div *ngIf="testDetalle.preguntas[currentPreguntaIndex]?.img" class="pregunta-imagen" style="width: 40%;">
+          <img [src]="testDetalle.preguntas[currentPreguntaIndex].img" alt="Imagen de la pregunta" style="max-width: 100%;">
+        </div>
+
+        <div class="pregunta-texto">
+          <p class="pregunta-enunciado">{{ testDetalle.preguntas[currentPreguntaIndex]?.pregunta }}</p>
+
+          <div class="opciones">
+            <div *ngFor="let opcion of testDetalle.preguntas[currentPreguntaIndex]?.opciones">
+              <button mat-button
+                      [ngClass]="{
+                        'opcion-seleccionada': respuestasSeleccionadas[currentPreguntaIndex] === opcion.letra,
+                        'opcion-correcta': opcion.esCorrecta && testFinalizado,
+                        'opcion-correcta-seleccionada': respuestasSeleccionadas[currentPreguntaIndex] === opcion.letra && opcion.esCorrecta && testFinalizado,
+                        'opcion-incorrecta-seleccionada': respuestasSeleccionadas[currentPreguntaIndex] === opcion.letra && !opcion.esCorrecta && testFinalizado
+                      }"
+                      (click)="seleccionarRespuesta(currentPreguntaIndex, opcion.letra)"
+                      [disabled]="testFinalizado">
+                {{ opcion.letra }}: {{ opcion.texto }}
+              </button>
+            </div>
+          </div>
+
+          <p *ngIf="testFinalizado && testDetalle.preguntas[currentPreguntaIndex]?.explicacion" class="explicacion">
+            <strong>Explicación:</strong> {{ testDetalle.preguntas[currentPreguntaIndex].explicacion }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="currentPreguntaIndex === testDetalle.preguntas.length" class="resultados">
+      <h3 class="resultados-titulo">Resultados del Test</h3>
+      <p class="resultados-detalle">{{ numCorrectas }}/{{ testDetalle.preguntas.length }} - {{ numCorrectas > 27 ? 'Apto' : 'No Apto' }}</p>
+      <button color="accent" mat-raised-button routerLink="/tests">
+        Volver
+      </button>
+    </div>
+  </div>
+
+  <div class="navegacion-preguntas-container">
+    <button style="margin-left: 20px;" mat-raised-button color="accent" (click)="prevPregunta()" [disabled]="currentPreguntaIndex === 0">Anterior</button>
+    <div class="navegacion-preguntas">
+      <div *ngFor="let pregunta of testDetalle.preguntas; let i = index"
+           [ngClass]="{
+             'pregunta-actual': i === currentPreguntaIndex,
+             'pregunta-contestada': esContestada(i) && i !== currentPreguntaIndex,
+             'pregunta-correcta': testFinalizado && resultados[i],
+             'pregunta-incorrecta': testFinalizado && !resultados[i]
+           }"
+           (click)="goToPregunta(i)">
+        {{ i + 1 }}
+      </div>
+      <div *ngIf="testFinalizado" [ngClass]="{'pregunta-actual': currentPreguntaIndex === testDetalle.preguntas.length}" (click)="goToPregunta(testDetalle.preguntas.length)">
+        FIN
+      </div>
+    </div>
+    <button style="margin-right: 20px;" color="accent" mat-raised-button (click)="currentPreguntaIndex === testDetalle.preguntas.length - 1 && !testFinalizado ? finalizarTest() : nextPregunta()" [disabled]="testFinalizado">
+      {{ currentPreguntaIndex === testDetalle.preguntas.length - 1 ? (testFinalizado ? 'Resultados' : 'Finalizar') : 'Siguiente' }}
+    </button>
+  </div>
+</div>

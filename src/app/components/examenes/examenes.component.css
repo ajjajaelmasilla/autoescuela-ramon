@@ -1,0 +1,134 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Nunito', sans-serif;
+  background-color: #DFDFDF;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+mat-card-content {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.filter-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.mat-button-toggle-group {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.mat-button-toggle {
+  margin: 0 5px;
+  color: white;
+  background-color: #795548;
+}
+
+.mat-button-toggle.mat-button-toggle-checked {
+  background-color: white;
+  border-color: #c2a330;
+  color: #c2a330;
+}
+
+.mat-button-toggle.mat-button-toggle-checked:hover {
+  background-color: white;
+  border-color: #f5cf3d;
+  color: #f5cf3d;
+}
+
+.examenes-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  justify-content: center;
+}
+
+.test-card {
+  width: 100%;
+  max-width: 400px;
+  margin: 16px;
+  padding: 5px;
+  border-radius: 12px;
+}
+
+.test-card img {
+  object-fit: cover;
+  height: 200px;
+  border-radius: 12px;
+  margin: 20px;
+  margin-bottom: 40px;
+}
+
+.mat-card-title {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.mat-card-content p {
+  font-size: 1.1em;
+  color: #555;
+}
+
+.mat-card-actions {
+  display: flex;
+  justify-content: center;
+  padding: 0 60px;
+}
+
+.resultado {
+  text-align: center;
+  font-weight: bold;
+}
+
+.resultado.apto {
+  color: green;
+}
+
+.resultado.no-apto {
+  color: red;
+}
+
+.progreso {
+  text-align: center;
+  font-weight: bold;
+  color: #795548;
+}
+
+.dificultad-estrellas {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dificultad-estrellas mat-icon {
+  margin-right: 2px;
+}
+
+.star-border {
+  color: grey;
+}
+
+.star-green {
+  color: green;
+}
+
+.star-yellow {
+  color: gold;
+}
+
+.star-red {
+  color: red;
+}

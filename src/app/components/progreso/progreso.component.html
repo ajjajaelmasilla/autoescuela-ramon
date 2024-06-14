@@ -1,0 +1,48 @@
+<div class="results-container">
+  <mat-card class="progreso-card">
+    <mat-card-header>
+      <mat-card-title>
+        Mi progreso
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content style="margin-top: 4vh;">
+
+      <div style="margin-bottom: 6vh; color: #795548;" *ngIf="aciertosUltimosDiezDias + erroresUltimosDiezDias > 0" class="progreso-mensaje">
+        <h3>Teniendo en cuenta los datos de los últimos diez días, {{ mensajeProgreso }}</h3>
+      </div>
+
+      <div class="charts-container">
+        <div class="chart-item">
+          <h3>Aciertos y errores del día</h3>
+          <ngx-charts-pie-chart
+            *ngIf="dailyResults.length > 0"
+            [view]="view"
+            [scheme]="colorScheme"
+            [results]="dailyResults"
+            [gradient]="gradient"
+            [legend]="showLegend"
+            [labels]="showLabels"
+            [doughnut]="isDoughnut"
+            [arcWidth]="arcWidth">
+          </ngx-charts-pie-chart>
+          <p *ngIf="dailyResults.length === 0">No hay estadísticas disponibles para hoy.</p>
+        </div>
+        <div class="chart-item">
+          <h3>Aciertos y errores totales</h3>
+          <ngx-charts-pie-chart
+            *ngIf="totalResults.length > 0"
+            [view]="view"
+            [scheme]="colorScheme"
+            [results]="totalResults"
+            [gradient]="gradient"
+            [legend]="showLegend"
+            [labels]="showLabels"
+            [doughnut]="isDoughnut"
+            [arcWidth]="arcWidth">
+          </ngx-charts-pie-chart>
+          <p *ngIf="totalResults.length === 0">No hay estadísticas disponibles.</p>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

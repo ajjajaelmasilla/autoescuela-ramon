@@ -1,0 +1,53 @@
+<div class="filter-container">
+  <h1 style="margin-left: 3vw;">Tests</h1>
+  <mat-button-toggle-group [(ngModel)]="selectedDificultad" (change)="filterTests()">
+    <mat-button-toggle value="todas">Todos</mat-button-toggle>
+    <mat-button-toggle [value]="1">Nivel 1</mat-button-toggle>
+    <mat-button-toggle [value]="2">Nivel 2</mat-button-toggle>
+    <mat-button-toggle [value]="3">Nivel 3</mat-button-toggle>
+    <mat-button-toggle [value]="4">Nivel 4</mat-button-toggle>
+    <mat-button-toggle [value]="5">Nivel 5</mat-button-toggle>
+  </mat-button-toggle-group>
+</div>
+
+<div class="examenes-container">
+  <mat-card class="test-card" *ngFor="let test of filteredTests">
+    <mat-card-header>
+      <mat-card-title>{{ test.titulo }}</mat-card-title>
+      <mat-card-title>
+        <div class="dificultad-estrellas">
+          <mat-icon *ngFor="let star of getStars(test.dificultad)" [ngClass]="star.colorClass">{{ star.icon }}</mat-icon>
+        </div>
+      </mat-card-title>
+    </mat-card-header>
+    <img mat-card-image src="assets/images/ae-ramon.png" alt="Imagen del test">
+    <mat-card-content>
+      <div style="width: 50%;">
+        <div style="margin-top: 20px;" *ngIf="getProgreso(test.id) && !getUltimoIntento(test.id)" class="progreso">
+          En curso:<br/>Pregunta {{ getProgreso(test.id)?.currentPreguntaIndex + 1 }} de {{ test.preguntas.length }}
+        </div>
+        <div style="margin-top: 20px;" *ngIf="getUltimoIntento(test.id) && !getProgreso(test.id)" class="resultado" [ngClass]="{'apto': getUltimoIntento(test.id)?.correctas > 27, 'no-apto': getUltimoIntento(test.id)?.correctas <= 27}">
+          Último intento:<br/>{{ getUltimoIntento(test.id)?.correctas }}/{{ getUltimoIntento(test.id)?.total }} -
+          <span>{{ getUltimoIntento(test.id)?.correctas > 27 ? 'Apto' : 'No Apto' }}</span>
+        </div>
+        <div *ngIf="getUltimoIntento(test.id) && getProgreso(test.id)">
+          <div class="progreso">
+            En curso:<br/>Pregunta {{ getProgreso(test.id)?.currentPreguntaIndex + 1 }} de {{ test.preguntas.length }}
+          </div>
+          <div style="margin-top: 10px;" class="resultado" [ngClass]="{'apto': getUltimoIntento(test.id)?.correctas > 27, 'no-apto': getUltimoIntento(test.id)?.correctas <= 27}">
+            Último intento:<br/>{{ getUltimoIntento(test.id)?.correctas }}/{{ getUltimoIntento(test.id)?.total }} -
+            <span>{{ getUltimoIntento(test.id)?.correctas > 27 ? 'Apto' : 'No Apto' }}</span>
+          </div>
+        </div>
+        <div style="margin-top: 10px; color: gray;" *ngIf="!getProgreso(test.id) && !getUltimoIntento(test.id)">
+          Sin intentos
+        </div>
+      </div>
+      <div style="height: 100%; display: flex;">
+        <button mat-raised-button color="accent" [routerLink]="['/tests', test.id]">
+          {{ getProgreso(test.id) ? 'Continuar' : 'Realizar test' }}
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

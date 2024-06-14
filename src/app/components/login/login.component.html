@@ -1,0 +1,22 @@
+<div class="login-container">
+  <mat-card class="login-card">
+    <h2 class="login-title">Iniciar sesión</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="login()" style="display: grid;">
+      <mat-form-field appearance="outline">
+        <mat-label>NIF</mat-label>
+        <input matInput formControlName="nif" required>
+        <mat-error *ngIf="loginForm.get('nif')?.hasError('required')">
+          El NIF no puede estar vacío
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Contraseña</mat-label>
+        <input matInput type="password" formControlName="contrasena" required>
+        <mat-error *ngIf="loginForm.get('contrasena')?.hasError('required')">
+          La contraseña no puede estar vacía
+        </mat-error>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">Iniciar Sesión</button>
+    </form>
+  </mat-card>
+</div>
