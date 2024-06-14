@@ -14,8 +14,9 @@
       <div class="charts-container">
         <div class="chart-item">
           <h3>Aciertos y errores del día</h3>
-          <ngx-charts-pie-chart
-            *ngIf="dailyResults.length > 0"
+          <p *ngIf="sinEstadisiticasDiarias()">No hay estadísticas disponibles para hoy.</p>
+          <ngx-charts-pie-chart 
+            *ngIf="!sinEstadisiticasDiarias()"
             [view]="view"
             [scheme]="colorScheme"
             [results]="dailyResults"
@@ -25,12 +26,12 @@
             [doughnut]="isDoughnut"
             [arcWidth]="arcWidth">
           </ngx-charts-pie-chart>
-          <p *ngIf="dailyResults.length === 0">No hay estadísticas disponibles para hoy.</p>
         </div>
         <div class="chart-item">
           <h3>Aciertos y errores totales</h3>
+          <p *ngIf="sinEstadisiticasTotales()">No hay estadísticas disponibles.</p>
           <ngx-charts-pie-chart
-            *ngIf="totalResults.length > 0"
+            *ngIf="!sinEstadisiticasTotales()"
             [view]="view"
             [scheme]="colorScheme"
             [results]="totalResults"
@@ -40,7 +41,6 @@
             [doughnut]="isDoughnut"
             [arcWidth]="arcWidth">
           </ngx-charts-pie-chart>
-          <p *ngIf="totalResults.length === 0">No hay estadísticas disponibles.</p>
         </div>
       </div>
     </mat-card-content>

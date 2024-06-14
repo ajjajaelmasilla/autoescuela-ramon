@@ -68,7 +68,9 @@ export class ExamenComponent implements OnInit {
 
   goToPregunta(index: number): void {
     this.currentPreguntaIndex = index;
-    this.saveProgreso();
+    if (!this.testFinalizado) {
+      this.saveProgreso();
+    }
   }
 
   finalizarTest(): void {
@@ -81,6 +83,7 @@ export class ExamenComponent implements OnInit {
         }
       });
       this.testFinalizado = true;
+
       this.resultadoService.registrarResultados(this.testDetalle.id, this.numCorrectas, this.testDetalle.preguntas.length);
       this.progresoService.limpiarProgreso(this.testDetalle.id);
     }

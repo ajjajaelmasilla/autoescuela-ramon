@@ -13,9 +13,9 @@ export class TestService {
   private dificultades: { [key: number]: number } = {};
 
   constructor(private preguntaService: PreguntaService) {
+    this.cargarDificultades();
     this.crearTests();
     this.crearTemarioTests();
-    this.cargarDificultades();
   }
 
   private crearTests(): void {

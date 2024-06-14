@@ -36,6 +36,14 @@ export class ProgresoComponent implements OnInit {
     };
   }
 
+  sinEstadisiticasDiarias(): boolean {
+    return this.dailyResults[0].value === 0 && this.dailyResults[1].value === 0;
+  }
+
+  sinEstadisiticasTotales(): boolean {
+    return this.totalResults[0].value === 0 && this.totalResults[1].value === 0;
+  }
+
   loadDailyChartData(): void {
     const resultados = this.resultadoService.obtenerResultadosAgrupadosPorDia();
     const today = new Date().toISOString().split('T')[0];
@@ -48,6 +56,8 @@ export class ProgresoComponent implements OnInit {
       { name: 'Aciertos', value: totalAciertos },
       { name: 'Errores', value: totalErrores }
     ];
+
+    console.log(this.dailyResults)
   }
 
   loadTotalChartData(): void {

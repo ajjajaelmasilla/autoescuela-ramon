@@ -1,17 +1,22 @@
 import { Injectable } from '@angular/core';
+import { UsuarioService } from './usuario.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProgresoService {
-  private progresos: { [key: number]: { currentPreguntaIndex: number, respuestasSeleccionadas: { [key: number]: string } } } = {};
+  private progresos: { [userId: number]: { [testId: number]: { currentPreguntaIndex: number, respuestasSeleccionadas: { [key: number]: string } } } } = {};
 
-  constructor() {
+  constructor(private usuarioService: UsuarioService) {
     this.cargarProgresos();
   }
 
   guardarProgreso(testId: number, currentPreguntaIndex: number, respuestasSeleccionadas: { [key: number]: string }): void {
-    this.progresos[testId] = { currentPreguntaIndex, respuestasSeleccionadas };
+    if (currentPreguntaIndex > 29) return;
+    if (!this.progresos[this.usuarioService.getCurrentUser().id]) {
+      this.progresos[this.usuarioService.getCurrentUser().id] = {};
+    }
+    this.progresos[this.usuarioService.getCurrentUser().id][testId] = { currentPreguntaIndex, respuestasSeleccionadas };
     localStorage.setItem('progresos', JSON.stringify(this.progresos));
   }
 
@@ -23,11 +28,16 @@ export class ProgresoService {
   }
 
   limpiarProgreso(testId: number): void {
-    delete this.progresos[testId];
-    localStorage.setItem('progresos', JSON.stringify(this.progresos));
+    if (this.progresos[this.usuarioService.getCurrentUser().id]) {
+      delete this.progresos[this.usuarioService.getCurrentUser().id][testId];
+      if (Object.keys(this.progresos[this.usuarioService.getCurrentUser().id]).length === 0) {
+        delete this.progresos[this.usuarioService.getCurrentUser().id];
+      }
+      localStorage.setItem('progresos', JSON.stringify(this.progresos));
+    }
   }
 
   obtenerProgreso(testId: number): { currentPreguntaIndex: number, respuestasSeleccionadas: { [key: number]: string } } | undefined {
-    return this.progresos[testId];
+    return this.progresos[this.usuarioService.getCurrentUser().id]?.[testId];
   }
 }
