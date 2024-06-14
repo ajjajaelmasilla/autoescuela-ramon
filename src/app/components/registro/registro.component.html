@@ -5,45 +5,36 @@
       <mat-form-field appearance="outline">
         <mat-label>Nombre</mat-label>
         <input matInput formControlName="nombre" required>
-        <mat-error *ngIf="registroForm.get('nombre')?.hasError('required')">
-          El nombre no puede estar vacío
-        </mat-error>
+        <mat-error *ngIf="registroForm.get('nombre')?.hasError('required')">El nombre es obligatorio.</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>NIF</mat-label>
         <input matInput formControlName="nif" required>
-        <mat-error *ngIf="registroForm.get('nif')?.hasError('required')">
-          El NIF no puede estar vacío
-        </mat-error>
+        <mat-error *ngIf="registroForm.get('nif')?.hasError('required')">El NIF es obligatorio.</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
         <input matInput formControlName="email" required email>
-        <mat-error *ngIf="registroForm.get('email')?.hasError('required')">
-          El email no puede estar vacío
-        </mat-error>
-        <mat-error *ngIf="registroForm.get('email')?.hasError('email')">
-          El email no es válido
-        </mat-error>
+        <mat-error *ngIf="registroForm.get('email')?.hasError('required')">El email es obligatorio.</mat-error>
+        <mat-error *ngIf="registroForm.get('email')?.hasError('email')">Introduce un email válido.</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Contraseña</mat-label>
         <input matInput type="password" formControlName="contrasena" required>
-        <mat-error *ngIf="registroForm.get('contrasena')?.hasError('required')">
-          La contraseña no puede estar vacía
-        </mat-error>
-        <mat-error *ngIf="registroForm.get('contrasena')?.hasError('minlength')">
-          La contraseña debe tener al menos 6 caracteres
-        </mat-error>
+        <mat-error *ngIf="registroForm.get('contrasena')?.hasError('required')">La contraseña es obligatoria.</mat-error>
+        <mat-error *ngIf="registroForm.get('contrasena')?.hasError('minlength')">La contraseña debe tener al menos 6 caracteres.</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Confirmar Contraseña</mat-label>
         <input matInput type="password" formControlName="confirmarContrasena" required>
-        <mat-error *ngIf="registroForm.hasError('mismatch')">
-          Las contraseñas no coinciden
-        </mat-error>
       </mat-form-field>
+
+      <mat-error *ngIf="registroForm.errors?.mismatch && registroForm.get('confirmarContrasena').touched">
+        Las contraseñas no coinciden.
+      </mat-error>
+
       <button mat-raised-button color="primary" type="submit" [disabled]="registroForm.invalid">Crear cuenta</button>
     </form>
   </mat-card>
+  
 </div>

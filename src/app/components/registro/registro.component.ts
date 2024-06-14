@@ -22,13 +22,15 @@ export class RegistroComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       contrasena: ['', [Validators.required, Validators.minLength(6)]],
       confirmarContrasena: ['', Validators.required]
-    }, { validator: this.passwordMatchValidator });
+    }, { validator: this.passwordMatchValidator.bind(this) });
   }
 
   ngOnInit(): void {}
 
-  passwordMatchValidator(formGroup: FormGroup): null | { mismatch: boolean } {
-    return formGroup.get('contrasena')?.value === formGroup.get('confirmarContrasena')?.value ? null : { mismatch: true };
+  passwordMatchValidator(formGroup: FormGroup): { mismatch: boolean } | null {
+    const contrasena = formGroup.get('contrasena')?.value;
+    const confirmarContrasena = formGroup.get('confirmarContrasena')?.value;
+    return contrasena === confirmarContrasena ? null : { mismatch: true };
   }
 
   registro(): void {
